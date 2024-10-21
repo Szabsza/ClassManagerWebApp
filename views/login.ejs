@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- mindenki szamara elerheto oldal -->
+<html lang="en">
+    <%- include('partials/head.ejs', { title: 'LOGIN' }) %>
+    <body>
+        <h1>Login</h1>
+        <!-- form ami lehetove teszi a bejelentkezest -->
+        <form action="/login/" method="POST">
+            <!-- ki lehet valasztani, hogy adminkent vagy tanarkent szeretnenk bejelentkezni -->
+            <p>
+                Admin 
+                <input type="radio" name="Role" value="admin">
+                <br> Teacher
+                <input type="radio" name="Role" value="teacher">
+            </p>
+            <!-- felhasznalonev input mezo -->
+            <p>
+                Enter your Username:
+                <input type="text" name="UserName" required>
+            </p>
+            <!-- jelszo input mezo -->
+            <p>
+                Enter your Password:
+                <input type="password" name="Password" required>
+            </p>
+            <!-- ha hiba lep fel (nem talal a jelszo, ures valamelyik mezo, stb.) itt kiirja -->
+            <% if (error) { %>
+                <p id="err">
+                    <%= error %>
+                </p>
+            <% } %>
+            <p>
+                <input type="submit" value="Login">
+            </p>
+        </form>
+    </body>
+</html>

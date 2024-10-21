@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- teljesen admin specifikus oldal -->
+<html lang="en">
+    <%- include('partials/head.ejs', { title: 'Create New Subject' }) %>
+    <body>
+        <%- include('partials/navbar.ejs', { session: session }) %>
+        <h1>Add new Subject</h1>
+        <!-- form uj tantargy bevezetesehez -->
+        <form action="/subject/" method="POST">
+            <!-- mi legyen az ID -->
+            <p>
+                Subject ID:<br>
+                <input type="text" name="SubjectID" value="DefaultID" required />
+            </p>
+
+            <!-- mi legyen a neve -->
+            <p>
+                Subject Name:<br>
+                <input type="text" name="SubjectName" value="DefaultName" required />
+            </p>
+
+            <!-- melyik felevben legyen -->
+            <p>
+                Semester:<br>
+                <select name="Semester">
+                    <option value="first" selected>I. Semester</option>
+                    <option value="second">II. Semester</option>
+                    <option value="third">III. Semester</option>
+                    <option value="fourth">IV. Semester</option>
+                    <option value="fifth">V. Semester</option>
+                    <option value="sixth">VI. Semester</option>
+                </select>
+            </p>
+
+            <!-- kurzusok szama -->
+            <p>
+                Number of Courses:<br>
+                <input type="number" name="Courses" min="0" required />
+            </p>
+
+            <!-- szeminariumok szama -->
+            <p>
+                Number of Seminars:<br>
+                <input type="number" name="Seminars" min="0" required />
+            </p>
+
+            <!-- laborok szama -->
+            <p>
+                Number of Labs:<br>
+                <input type="number" name="Labs" min="0" required />
+            </p>
+
+            <!-- hiba eseten, itt jeleniti meg -->
+            <% if (error) { %>
+                <p id="err">
+                    <%= error %>
+                </p>
+            <% } %>
+
+            <p>
+                <input type="submit" value="Create new Subject!" />
+            </p>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!-- mindenki szamara elerheto oldal -->
+<html lang="en">
+    <%- include('partials/head.ejs', { title: 'Subject Details' }) %>
+    <body>
+        <%- include('partials/navbar.ejs', { session: session }) %>
+        <h1>Subject: <%= subjectName %></h1>
+        <h2>Files:</h2>
+        
+        <!-- form eroforrasok feltoltesehez -->
+        <form action="/resources/" method="POST" enctype="multipart/form-data">
+            <!-- az oldalhoz szukseges parameterek -->
+            <input readonly type="hidden" name="SubjectID" value= <%= subjectID %> />
+            <input readonly type="hidden" name="SubjectName" value= <%= subjectName %> />
+            <input readonly type="hidden" name="Semester" value= <%= semester %> />
+            <input readonly type="hidden" name="Courses" value= <%= courses %> />
+            <input readonly type="hidden" name="Seminars" value= <%= seminars %> />
+            <input readonly type="hidden" name="Labs" value= <%= labs %> />
+            
+            <!-- file feltoltesi input mezo -->
+            <!-- csak az admin, illetve az admin altal a tantargyhoz rendelt tanarok hasznalhatjak, es lathatjak -->
+            <% if (session && (session.role === 'admin' || (session.role === 'teacher' && teachers.includes(session.username)))) { %>
+                <p>
+                    Upload File:<br>
+                    <input type="file" name="Files" multiple/>
+                </p>
+                <p>
+                    <input type="submit" value="Upload!" />
+                </p>
+            <% } %>
+            
+            <!-- ha hiba lep fel feltoltesnel, az itt jelenik meg -->
+            <% if (error) { %>
+                <p id="err">
+                    <%= error %>
+                </p>
+            <% } %>
+            
+            <!-- ha a feltoltes sikeres itt kapunk rola informaciot -->
+            <% if (info) { %>
+                <p id="info">
+                    <%= info %>
+                </p>
+            <% } %>
+        </form>
+
+        <!-- feltoltott es a tantargyhoz hozzarendelt eroforrasok, mindenki lathatja -->
+        <% if (resources.length) { %>
+            <% resources.forEach((resource) => { %>
+                <!-- form amivel letudunk tolteni eroforrasokat -->
+                <form id="<%= resource.ResourceName %>" action="/resources/download/" method="GET">
+                    <!-- letolteshez szukseges query parameter -->
+                    <input type="hidden" name="ResourceName" value = <%= resource.ResourceName %> />
+                    <!-- megjeleno eroforras nev -->
+                    <input readonly type="text" name="OriginalName" value = <%= resource.OriginalName %> />
+                    <input type="submit" value="Download" />
+                    <!-- csak az eroforras tulajdonosa tudja torolni magat az eroforrast -->
+                    <% if (session && session.username === resource.UserName) { %>
+                        <input type="button" value="Delete" onclick="deleteFile('<%= resource.ResourceName %>', '<%= session.username %>')"/>
+                    <% } %>
+                    <!-- admin torles? -->
+                </form>
+            <% }) %>
+        <% } %>
+        <script src="../fetch.js"></script>
+    </body>
+</html>

@@ -1,0 +1,303 @@
+body {
+    background-color: #e4f1fe;
+}
+
+div {
+    background-color: #e4f1fe;
+}
+
+ul {
+    background-color: #8dc6ff;
+    text-align: center;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-radius: 20px;
+    margin-top: 0%;
+    border: solid #22313f;
+}
+
+li {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    list-style: none;
+}
+
+li a {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #22313f;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+form {
+    padding: 20px;
+    text-align: center;
+    background-color: #22313f;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-radius: 10px;
+    border: solid, #8dc6ff;
+}
+
+form p {
+    color: #e4f1fe;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+form input {
+    border: none;
+    padding: 8px 15px 8px 15px;
+    background: #8dc6ff;
+    box-shadow: 1px, 1px, 4px, #22313f;
+    border-radius: 3px;
+}
+
+form select {
+    border: none;
+    padding: 8px 15px 8px 15px;
+    background: #8dc6ff;
+    box-shadow: 1px, 1px, 4px, #22313f;
+    border-radius: 3px;
+}
+
+form p {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+h1, h2 {
+    padding: 20px 20px 20px 20px;
+    background-color: #22313f;
+    color: #e4f1fe;
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: center;
+    border: solid #8dc6ff;
+    border-radius: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 0%;
+}
+
+body a {
+    text-decoration: none;
+}
+
+body a p {
+    padding: 15px 15px 15px 15px;
+    background-color: #22313f;
+    color: #e4f1fe;
+    text-align: center;
+    border: solid #8dc6ff;
+    border-radius: 10px;
+    margin-left: 40%;
+    margin-right: 40%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-decoration: none;
+}
+
+/* navbar */
+
+#nav {
+    background-color: #22313f;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    border: #8dc6ff, solid;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+}
+
+.nav {
+    text-decoration: none;
+    margin: 0%;
+    margin-right: 10px;
+}
+
+/* Index -> Buttons */
+
+input[type="submit"] {
+    background-color: #8dc6ff;
+    color: #22313f;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #e4f1fe;
+}
+
+input[type="submit"]:focus {
+    outline: none;
+}
+
+input[type="submit"]:active {
+    background-color: #e4f1fe;
+}
+
+/* TimeTable -> Cancel buttons */
+
+input[type="button"] {
+    background-color: #8dc6ff;
+    color: #22313f;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="button"]:hover {
+    background-color: #e4f1fe;
+}
+
+input[type="button"]:focus {
+    outline: none;
+}
+
+input[type="button"]:active {
+    background-color: #e4f1fe;
+}
+
+/* index -> Subject Table */
+
+table {
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+    align-self: center;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 2px solid #22313f;
+    font-size: 26px;
+}
+
+.hidden {
+    text-decoration: none;
+    margin: 0;
+    width: 0;
+    height: 0;
+    padding: 0;
+    border: transparent;
+    background-color: transparent;
+}
+
+.submit {
+    width: 0%;
+}
+
+.submit input {
+    width: 100%;
+    border-radius: 25px;
+}
+
+#table_container {
+    background-color: #22313f;
+    margin: auto;
+    border: solid, #8dc6ff;
+    border-radius: 10px;
+}
+
+th {
+    background-color: #22313f;
+    color: #e4f1fe;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+td {
+    background-color: #8dc6ff;
+}
+
+#loggedin {
+    margin: auto;
+    width: 100%;
+    background-color: #22313f;
+    text-align: center;
+    border-top: #8dc6ff solid;
+}
+
+#loggedin p {
+    display: inline-block;
+    padding: 5px;
+    color: #e4f1fe;
+}
+
+#table_title {
+    margin: auto;
+    margin-top: 40px;
+    border-radius: 0;
+    border-left: #22313f ;
+    border-right: #22313f ;
+}
+
+#syllabus_container {
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: 25px;
+}
+
+span {
+    padding: 10px;
+    background-color: #22313f;
+    color: #e4f1fe;
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.top {
+    margin-top: 20px;
+}
+
+#guest_view, #admin_view {
+    padding: 20px;
+    text-align: center;
+    background-color: #22313f;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-radius: 10px;
+    border: solid, #8dc6ff;
+}
+
+.guest_view_item {
+    background-color: #22313f;
+    border-bottom: #8dc6ff solid;
+}
+
+.guest_view_item p {
+    padding: 10px;
+    background-color: #22313f;
+    color: #e4f1fe;
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* Mainpage -> form buttons */
+
+.tableitem {
+    width: 8%;
+}
+
+.tableitem * {
+    all:unset;
+}
+
+.tableitem input[type="submit"] {
+    width: auto;
+    border-radius: 25px;
+}

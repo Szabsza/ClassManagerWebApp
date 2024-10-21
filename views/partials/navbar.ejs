@@ -1,0 +1,39 @@
+<!-- az oldal tetejen megjeleno navigazios menu -->
+<div id="nav">
+    <!-- fo oldalra visz -->
+    <form class="nav" action="/index" method="GET">
+        <input type="submit" value="Home">
+    </form>
+
+    <!-- admin specifikus nezetek -->
+    <% if (session && session.role === 'admin') { %>
+        <form class="nav" action="/subject/" method="GET">
+            <input type="submit" value="Create Subject">
+        </form>    
+        <form class="nav" action="/application/" method="GET">
+            <input type="submit" value="Add/Remove">
+        </form>
+        <form class="nav" action="/teachers/" method="GET">
+            <input type="submit" value="Teachers">
+        </form>
+    <% } %>
+    
+    <!-- ha mar be van jelentkezve, akkor kijenetkezes gombot jeleniti meg -->
+    <!-- ellenkezo esetben bejelentkezes gombot mutat -->
+    <% if (session && session.isloggedin) { %>
+        <form class="nav" action="/logout/" method="POST">
+            <input type="submit" value="Logout">
+        </form>
+    <% } else { %>
+        <form class="nav" action="/login/" method="GET">
+            <input type="submit" value="Login">
+        </form>
+    <% } %>
+</div>
+<!-- navigacios menu alatti sav a bejelentkezett felhasznalora vonatkozoan -->
+<% if (session && session.isloggedin) { %>
+    <div id="loggedin">
+        <p>UserName: <%= session.username %></p>
+        <p>Role: <%= session.role %></p> 
+    </div>
+<% } %>

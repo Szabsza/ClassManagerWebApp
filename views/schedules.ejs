@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!-- mindenki szamara elerheto oldal, bizonyos nezetekkel -->
+<html lang="en">
+    <%- include('partials/head.ejs', { title: 'TimeTable' }) %>
+    <body>
+        <%- include('partials/navbar.ejs', { session: session }) %>
+        <!-- mindenki szamara elerheto nezet -->
+        <h1>Subject: <%= subjectName %></h1>
+        <% if (schedules && schedules.length) { %>
+            <h2>Time Table</h2>
+            <div id="guest_view">
+                <!-- az orarend tablazata -->
+                <table>
+                    <tr>
+                        <th>Class</th>
+                        <th>Date</th>
+                        <th>Starts</th>
+                        <th>Ends</th>
+                        <!-- csak az admin lathtja -->
+                        <% if (session && session.role === 'admin') { %>
+                            <th>Cancel</th>
+                        <% } %>
+                    </tr>
+                    <% schedules.forEach(schedule => { %>
+                        <!-- adott orara vonatkozo programalasi informaciok -->
+                        <tr id="schedule:<%= schedule.TimeID %>">
+                            <td><%= schedule.ClassType %></td>
+                            <td><%= schedule.Day %></td>
+                            <td><%= schedule.Start %></td>
+                            <td><%= schedule.End %></td>
+                            <!-- admin tudja csak eltavolitani az adott oranak a programalasat -->
+                            <% if (session && session.role === 'admin') { %>
+                                <td class="submit">
+                                    <!-- aszinkron hivas a programalas torlesehez -->
+                                    <input type="button" value="Cancel" onclick="deleteSchedule('<%= schedule.TimeID %>')"/>
+                                </td>
+                            <% } %>
+                        </tr>
+                    <% }) %>
+                </table>
+            </div>
+        <% } else { %>
+            <!-- ha meg nincs orarend letrehozva -->
+            <h2>There are no Schedules for this Subject yet...</h2>
+        <% } %>
+
+        <!-- tanar specifikus nezet -->
+        <% if (session && session.role === 'teacher' && teachers.includes(session.username)) { %>
+            <h2>Make a request</h2>
+            <!-- form a tanar kivansagihoz -->
+            <form action="/schedules/request" method="POST">
+                <!-- szukseges parameterek az oldal ujrarenderelesenel -->
+                <input type="hidden" name="SubjectNameRequest" value="<%= subjectName %>">
+                <input type="hidden" name="SubjectIDRequest" value="<%= subjectID %>">
+                
+                <!-- milyen tipusu orat szeretne -->
+                <span>Class Type: </span>
+                <select name="ClassTypeRequest">
+                    <option value="course" selected>Course</option>
+                    <option value="seminar">Seminar</option>
+                    <option value="lab">Lab</option>
+                </select>
+
+                <!-- mit szeretne -->
+                <span>Request: </span>
+                <select name="Request">
+                    <option value="create" selected>Create</option>
+                    <option value="delete">Delete</option>
+                </select>
+
+                <!-- melyik datumon -->
+                <span>On the day of:</span>
+                <input type="date" name="DayRequest" min="2023-01-01" value="2023-01-01">
+
+                <!-- mettol -->
+                <span>Starts:</span>
+                <input type="time" name="StartRequest" min="08:00" max="18:00" value="08:00">
+
+                <!-- meddig -->
+                <span>Ends:</span>
+                <input type="time" name="EndRequest" min="10:00" max="20:00" value="10:00"> <br>
+                
+                <!-- informacio a muvelet sikeressegerol -->
+                <% if (infoRequest) { %>
+                    <p>
+                        <%= infoRequest %>
+                    </p>
+                <% } %>
+
+                <!-- hiba eseten, itt jelzi -->
+                <% if (errorRequest) { %>
+                    <p>
+                        <%= errorRequest %>
+                    </p>
+                <% } %>
+
+                <input class="top" type="submit" value="Submit">
+            </form>
+        <% } %>
+
+        <!-- admin specifikus nezet -->
+        <% if (session && session.role === 'admin') { %>
+            <h2>Set new Class</h2>
+            <!-- form egy uj programalas bevezetesehez -->
+            <form action="/schedules/" method="POST">
+                <!-- szukseges parameterek az oldal ujrarenderelesenel -->
+                <input type="hidden" name="SubjectName" value="<%= subjectName %>">
+                <input type="hidden" name="SubjectID" value="<%= subjectID %>">
+                
+                <!-- milyen tipusu ora -->
+                <span>Class Type: </span>
+                <select name="ClassType">
+                    <option value="course" selected>Course</option>
+                    <option value="seminar">Seminar</option>
+                    <option value="lab">Lab</option>
+                </select>
+
+                <!-- melyik datumon -->
+                <span>On the day of:</span>
+                <input type="date" name="Day" min="2023-01-01" max="2030-01-01" value="2023-01-01">
+
+                <!-- mettol -->
+                <span>Starts:</span>
+                <input type="time" name="Start" min="08:00" max="18:00" value="08:00">
+
+                <!-- meddig -->
+                <span>Ends:</span>
+                <input type="time" name="End" min="10:00" max="20:00" value="10:00"> <br>
+
+                <!-- informacio a muvelet sikeressegerol -->
+                <% if (infoCreate) { %>
+                    <p>
+                        <%= infoCreate %>
+                    </p>
+                <% } %>
+                
+                <!-- hiba eseten, itt jelzi -->
+                <% if (errorCreate) { %>
+                    <p>
+                        <%= errorCreate %>
+                    </p>
+                <% } %>
+                
+                <input class="top" type="submit" value="Submit">
+            </form>
+
+            <% if (requests && requests.length) { %>
+                <h2>Requests</h2>
+                <div id="admin_view">
+                    <!-- tanarok kivansagait megjelenito tablazat -->
+                    <table>
+                        <tr>
+                            <th>From</th>
+                            <th>Request to</th>
+                            <th>Class</th>
+                            <th>Date</th>
+                            <th>Starts</th>
+                            <th>Ends</th>
+                            <th>Delete</th>
+                        </tr>
+                        <% requests.forEach(request => { %>
+                            <tr id="request:<%= request.RequestID %>">
+                                <!-- informaciok a tanar kivansagara vonatkozoan -->
+                                <td><%= request.UserName %></td>
+                                <td><%= request.Request %></td>
+                                <td><%= request.ClassType %></td>
+                                <td><%= request.Day %></td>
+                                <td><%= request.Start %></td>
+                                <td><%= request.End %></td>
+                                <!-- aszinkron hivas a kivansag torlesehez -->
+                                <td class="submit"><input type="button" value="Delete" onclick="deleteRequest('<%= request.RequestID %>')"/></td>
+                            </tr>
+                        <% }) %>
+                    </table>
+                </div>
+            <% } else { %>
+                <!-- ha meg egy tanar sem jelezte kivansagait -->
+                <h2>There are no requests from Teachers..</h2>
+            <% } %>
+        <% } %>
+        <script src="../fetch.js"></script>
+    </body>
+</html>

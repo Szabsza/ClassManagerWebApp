@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<!-- szerver oldali hiba eseten megjeleno oldal -->
+<html>
+  <%- include('partials/head.ejs', { title: 'Error' }) %>
+  <body>
+    <%- include('partials/navbar.ejs') %>
+    
+    <h1>We have encountered an error</h1>
+    <p>Message:</p>
+    <p><%= error %></p>
+    <p>
+      <a href="/index">Back To the Main Page.</a>
+    </p>
+  </body>
+</html>

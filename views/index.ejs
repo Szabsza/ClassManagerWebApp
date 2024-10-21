@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!-- fo oldal -->
+<html lang="en">
+    <%- include('partials/head.ejs', { title: 'MAINPAGE' }) %>
+    <body>
+        <%- include('partials/navbar.ejs', { session: session }) %>
+
+        <h1 id="table_title">SUBJECTS:</h1>
+        <div id="table_container">
+            <% if(subjects.length) { %>
+                <!-- Fo oldali tablazat -->
+                <table>
+                    <% subjects.forEach((subject) => { %>
+                        <tr>
+                            <th>SubjectID</th>
+                            <th>SubjectName</th>
+                            <th>Semester</th>
+                            <th></th>
+                            <th>Options</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- Gomb amivel meglehet tekkinteni tobb infot egy adott tantargyrol -->
+                                <input type="button" value="<%= subject.SubjectID %>" onclick="getMore('<%= subject.SubjectID %>')"/>
+                            </td>
+
+                            <td><%= subject.SubjectName %></td>
+                            <td><%= subject.Semester %></td>
+                            
+                            <td class="tableitem">
+                                <!-- form ami a syllabus oldalra visz -->
+                                <form  action="/syllabus/" method="GET">
+                                    <!-- szukseges parameterek a queryben, amik a syllabus oldalon elerhetoek -->
+                                    <input type="hidden" name="SneakySubjectID" value= <%= subject.SubjectID %> />
+                                    <input type="hidden" name="SneakySubjectName" value= <%= subject.SubjectName %> />
+                                    <input type="submit" value="Syllabus"/>
+                                </form>
+                            </td>
+
+                            <td class="tableitem">
+                                <!-- form ami az adott tantargy orarendjehez visz -->
+                                <form action="/schedules/" method="GET">
+                                    <!-- szukseges parameterek a queryben, amik az orarend oldalon elerhetoek -->
+                                    <input type="hidden" name="SneakySubjectID" value= <%= subject.SubjectID %> />
+                                    <input type="hidden" name="SneakySubjectName" value= <%= subject.SubjectName %> />
+                                    <input type="submit" value="Time Table"/>
+                                </form>
+                            </td>
+                            
+                            <td class="tableitem">
+                                <!-- form ami az adott tantargy eroforrasaihoz visz -->
+                                <form action="/resources/" method="GET">
+                                    <!-- szukseges parameterek a queryben, amik az eroforras oldalon elerhetoek -->
+                                    <input type="hidden" name="SneakySubjectID" value= <%= subject.SubjectID %> />
+                                    <input type="hidden" name="SneakySubjectName" value= <%= subject.SubjectName %> />
+                                    <input type="hidden" name="SneakySemester" value= <%= subject.Semester %> />
+                                    <input type="hidden" name="SneakyCourses" value= <%= subject.Courses %> />
+                                    <input type="hidden" name="SneakySeminars" value= <%= subject.Seminars %> />
+                                    <input type="hidden" name="SneakyLabs" value= <%= subject.Labs %> />
+                                    <input type="submit" value="Files"/>
+                                </form>
+                            </td>
+                        </tr>
+                        <!-- szukseges elem az extra informaciok megjelenitesehez -->
+                        <tr id="<%= subject.SubjectID %>:infobar">
+                        
+                        </tr>
+                    <% }) %>
+                </table>
+            <% } else { %>
+                <!-- abban az esetben, ha meg nincs egy tantargy sem letrehozva -->
+                <p>
+                    There are no Subjects created yet..
+                </p>
+            <% } %>
+        </div>
+        <script src="../fetch.js"></script>
+    </body>
+</html>

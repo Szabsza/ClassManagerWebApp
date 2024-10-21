@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!-- teljesen admin specifikus oldal -->
+<html lang="en">
+    <%- include('partials/head.ejs', { title: 'Teachers' }) %>
+    <body>
+        <%- include('partials/navbar.ejs', { session: session }) %>
+        <h2>Delete Teachers</h2>
+        <!-- form tanarok torlesehez -->
+        <form action="/teachers/delete/" method="POST">
+            
+            <% if (users.length) { %>
+                <p>
+                    Users:<br>
+                    <!-- tanar kivalasztasa, akit torolni szeretnenk -->
+                    <select name="Users">
+                        <% users.forEach((user) => { %>
+                            <option value= "<%= user.UserName %>" selected> (ID:<%= user.UserID %>) <%= user.UserName %> </option>
+                        <% }) %>
+                    </select>
+                </p>
+
+                <!-- hiba eseten itt jelzi -->
+                <% if (error) { %>
+                    <p class="err">
+                        <%= error %>
+                    </p>
+                <% } %>
+                
+                <!-- informacio a muvelet sikeressegerol -->
+                <% if (info) { %>
+                    <p class="info">
+                        <%= info %>
+                    </p>
+                <% } %>
+                
+                <p>
+                    <input type="submit" value="Delete Teacher" />
+                </p>
+
+            <% } else { %>
+                <!-- ha meg nincs tanar letrehozva -->
+                <p>
+                    We are sorry to tell you, but there are no Users created yet...
+                </p>
+            <% } %>
+            
+        </form>
+
+        <h2>Create Teachers</h2>
+        <!-- form uj tanarok "regisztralasahoz" -->
+        <form action="/teachers/create/" method="POST">
+            <!-- tanar neve -->
+            <p>
+                New teacher's Username: <br>
+                <input type="text" name="UserName">
+            </p>
+            
+            <!-- tanar jelszava -->
+            <p>
+                New teacher's Password: <br>
+                <input type="password" name="Password">
+            </p>
+            
+            <!-- tanar jelszava ujra -->
+            <p>
+                New teacher's Password again: <br>
+                <input type="password" name="PasswordAgain">
+            </p>
+            
+            <!-- hiba eseten itt jelzi -->
+            <% if (errorCreate) { %>
+                <p class="err">
+                    <%= errorCreate %>
+                </p>
+            <% } %>
+            
+            <!-- informacio a muvelet sikeressegerol -->
+            <% if (infoCreate) { %>
+                <p class="info">
+                    <%= infoCreate %>
+                </p>
+            <% } %>
+            
+            <p>
+                <input type="submit" value="Create Teacher" />
+            </p>
+        </form>
+    </body>
+</html>

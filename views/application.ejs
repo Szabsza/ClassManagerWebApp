@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- teljesen admin specifikus oldal -->
+<html lang="en">
+    <%- include('partials/head.ejs', { title: 'Application' }) %>
+    <body>
+        <%- include('partials/navbar.ejs', { session: session }) %>
+        <h1>Add or remove teachers from Subjects</h1>
+        <!-- form tanarok tantargyhoz valo hozzarendelesehez -->
+        <form action="/application/" method="POST">
+            
+            <% if (subjects.length && users.length) { %>
+                <p>
+                    Subjects:<br>
+                    <!-- a mar letrehozott tantargyak megjelenitese -->
+                    <select name="SubjectID">
+                        <% subjects.forEach((subject) => { %>
+                            <option value= "<%= subject.SubjectID %>" selected> (ID:<%= subject.SubjectID %>) <%= subject.SubjectName %> </option>
+                        <% }) %>
+                    </select>
+                </p>
+                <p>
+                    Users:<br>
+                    <!-- a mar letrehozott tanarok megjelenitese -->
+                    <select name="Users">
+                        <% users.forEach((user) => { %>
+                            <option value= "<%= user.UserID %>" selected> (ID:<%= user.UserID %>) <%= user.UserName %></option>
+                        <% }) %>
+                    </select>
+                </p>
+                
+                <p>
+                    Action:<br>
+                    <!-- mit szeretne -->
+                    <select name="Action">
+                        <option value="join" selected>Add to Subject</option>
+                        <option value="leave">Remove from Subject</option>
+                    </select>
+                </p>
+                
+                <p>
+                    <input type="submit" value="Submit request!" />
+                </p>
+
+                <!-- hiba eseten itt jelenit meg -->
+                <% if (error) { %>
+                    <p id="err">
+                        <%= error %>
+                    </p>
+                <% } %>
+                
+                <!-- informacio a muvelet sikeressegerol -->
+                <% if (info) { %>
+                    <p id="info">
+                        <%= info %>
+                    </p>
+                <% } %>
+            
+            <% } else { %>
+                <!-- ha meg nincs egy tanar sem vagy egy tantargy sem letrehozva -->
+                <p>
+                    We are sorry to tell you, but there are no Subjects created yet...<br>
+                    ...<br>
+                    Or just maybe you should not see this...
+                </p>
+            <% } %>
+        </form>
+    </body>
+</html>

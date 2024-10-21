@@ -1,0 +1,20 @@
+version: "3.5"
+
+services:
+  db:
+    image: mysql:8.0.33
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: wf24j2ucQYb5adMM7Nifk5ii
+      MYSQL_DATABASE: webprog
+      MYSQL_USER: webprog
+      MYSQL_PASSWORD: VgJUjBd8
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3307:3306
+    volumes:
+      - "webprogexamplesvolume:/var/lib/mysql"
+
+volumes:
+  webprogexamplesvolume:
